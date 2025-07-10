@@ -219,3 +219,94 @@ class ResetPasswordView(View):
             return redirect('reset_pwd_confirm')
 
         return render(request, self.template_name, {'form': form})
+
+# Input confirmation code and update password
+class ConfirmationCodeView(View):
+    form_class = ConfirmationCodeForm # need to remove update password part
+    template_name = 'users/code_confirm.html'
+
+    def get(self, request, *args, **kwargs):
+        # show form for code input and new password
+        init = {
+            'username': request.GET.get('username', ''),
+            'email_code': request.GET.get('code', '')
+        }
+        form = self.form_class(initial=init)
+        return render(request, self.template_name, {"form": form})
+
+    def post(self, request, *args, **kwargs):
+        # writes to the directory and goes to login page
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            client = boto3.client('cognito-idp', region_name=settings.AWS_COGNITO_REGION)
+
+            response = client.confirm_sign_up(
+                ClientId=settings.AWS_COGNITO_CLIENT_ID,
+                Username=form.cleaned_data['username'],
+                ConfirmationCode=form.cleaned_data['email_code'],
+            )
+
+            user = User.objects.get(username=form.cleaned_data['username'])
+            user.is_active = True
+            user.save()
+
+            # confirm and redirect to login
+            return redirect('login')
+        return render(request, self.template_name, {'form': form})
+
+@login_required
+def dashboard_redirect(request):
+    user = request.user
+
+    if user.is_authenticated:
+        # If the user is inactive, redirect to 'deactivated' page
+        if not request.user.activated:
+            return redirect('deactivated')
+
+        # Redirect based on user type
+        if request.user.user_type == 1:  # basic user
+            return redirect('driver_dashboard')
+        elif request.user.user_type == 2:  # ???
+            return redirect('sponsor_dashboard')
+        elif request.user.user_type == 3:  # admin
+            return redirect('admin_dashboard')
+
+    return redirect('home')
+
+@login_required
+@user_passes_test(is_basic)
+def driver_dashboard(request):
+    context = {}
+
+    if request.user.is_authenticated:
+        try:
+            # driver, _ = User.objects.get_or_create(user=request.user)
+            # context['point_balance'] = driver.point_balance
+
+            if request.method == 'POST':
+                form = ChangePointsForm(request.POST)
+                if form.is_valid():
+                    pass
+                    # points = form.cleaned_data['points']
+                    # driver.point_balance += points
+                    # driver.save()
+                    # context['message'] = "Points updated successfully!"
+            else:
+                form = ChangePointsForm()
+
+            context['form'] = form
+
+        except User.DoesNotExist:
+            # debugging
+            # context['point_balance'] = "No driver profile found."
+            context['form'] = None
+    return render(request, 'users/dashboard.html', context)
+
+#@user_passes_test(is_sponsor)
+def sponsor_dashboard(request):
+    return render(request, 'users/sponsor_dashboard.html')
+
+@user_passes_test(is_admin)
+def admin_dashboard(request):
+    return render(request, 'users/admin_dashboard.html')

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+{% if user.user_type == 1 %}
+    {% include 'navbar.html' %}
+{% elif user.user_type == 2 %}
+    {% include 'navbar_sponsor.html' %}
+{% elif user.user_type == 3 %}
+    {% include 'navbar_admin.html' %}
+{% endif %}
+
+<div class="content">
+    <h3>Notifications</h3>
+    <div class="list-group">
+        {% if notifications|length > 0 %}
+            {% for notif in notifications %}
+                <a href="{% url 'notification' notif.id %}" 
+                class="list-group-item list-group-item-action {% if notif.unread %}list-group-item-warning{% endif %}">
+                    <div class="d-flex justify-content-between">
+                        <h4><strong>{{ notif.subject }}</strong></h4>
+                        <small>{{ notif.timestamp }}</small>
+                    </div>
+                    <p>{{ notif.message|truncatechars:100 }}</p>
+                    <small>From: {{ notif.sender }}</small>
+                </a>
+            {% endfor %}
+        {% else %}
+            <p>You have no notifications.</p>
+        {% endif %}
+    </div>
+</div>
+<style>
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+        transition: background-color .3s ease;
+        transform: scale(1.01);
+    }
+</style>
+{% endblock %}

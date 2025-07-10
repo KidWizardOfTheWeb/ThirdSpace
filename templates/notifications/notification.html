@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Notification{% endblock %}
+
+{% block content %}
+{% if user.user_type == 1 %}
+    {% include 'navbar.html' %}
+{% elif user.user_type == 2 %}
+    {% include 'navbar_sponsor.html' %}
+{% elif user.user_type == 3 %}
+    {% include 'navbar_admin.html' %}
+{% endif %}
+
+<div class="content">
+    <h3>{{notification.subject}}</h3>
+    <div class="d-flex justify-content-between">
+        <small>From: {{ notification.sender }}</small>
+        <small>Sent at {{ notification.timestamp }}</small>
+    </div>
+    <p class="lead mb-3">{{ notification.message}}</p>
+</div>
+{% endblock %}

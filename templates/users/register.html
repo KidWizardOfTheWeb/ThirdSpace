@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} Register Here! {% endblock title %}
+{% block content %}
+    <body class="loginWrapper">
+        <h1 class="loginTitle">Register Page</h1>
+        <div class="logForm">
+            <form method="POST">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <div class="alert" role="alert">
+                        <div id="form_errors">
+                            {% for key, value in form.errors.items %}
+                                <strong>{{ key }}</strong>
+                                <strong>{{ value }}</strong>
+                                <br>                           
+                            {% endfor %}               
+                        </div>
+                    </div>
+                {% endif %}
+                {{ form.first_name }}
+                {{ form.last_name }}
+                {{ form.username }}
+                {{ form.password1 }}
+                {{ form.password2 }}
+                {{ form.email }}
+                {{ form.phone }}
+                <br><br>
+                <button class="btn" type="submit">Submit</button>
+            </form>
+        </div>
+    </body>
+{% endblock content %}

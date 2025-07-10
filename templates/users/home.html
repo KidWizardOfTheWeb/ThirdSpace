@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %} 🥭 Home Page 🥭 {% endblock title %}
+{% block content %}
+    <div class="jumbotron" style="text-align:center">
+        <h1>Welcome to ThirdSpace (formerly known as MangoDjango)!</h1>
+        <a href="{% url 'login' %}" class="btn btn-primary">Go to Login Page</a>
+    </div>
+{% endblock content %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login Settings{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Navbar inj -->
+{% include 'navbar.html' %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar-account">
+            <div class="list-group">
+                <a href="{% url 'my_account' %}"
+                   class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'my_account' %}sidebar-account-active{% endif %}">
+                   Bio
+                </a>
+                <a href="{% url 'personal_information' %}"
+                   class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'personal_information' %}sidebar-account-active{% endif %}">
+                   Personal Information
+                </a>
+                <a href="{% url 'login_settings' %}"
+                   class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'login_settings' %}sidebar-account-active{% endif %}">
+                   Login Settings
+                </a>
+                <a href="{% url 'notifications' %}"
+                   class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'notifications' %}sidebar-account-active{% endif %}">
+                   Notifications
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="col-md-10 ms-sm-auto px-4">
+            <h2>Login Settings</h2>
+
+            <body class="loginWrapper">
+                <div class="logForm">
+                    <p><strong>Change Password:</strong> {{ user.username }}</p>
+                    <form method="POST" style="text-align:center">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn">Submit</button>
+                    </form>
+                </div>
+            </body>
+
+        </main>
+
+    </div>
+</div>
+{% endblock %}

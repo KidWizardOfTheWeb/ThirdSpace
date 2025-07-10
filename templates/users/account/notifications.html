@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}notifications{%endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
+{% endblock %} {% block content %}
+
+<!-- Navbar inj -->
+{% include 'navbar.html' %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar-account">
+            <div class="list-group">
+                <a
+                    href="{% url 'my_account' %}"
+                    class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'my_account' %}sidebar-account-active{% endif %}"
+                >
+                    Bio
+                </a>
+                <a
+                    href="{% url 'personal_information' %}"
+                    class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'personal_information' %}sidebar-account-active{% endif %}"
+                >
+                    Personal Information
+                </a>
+                <a
+                    href="{% url 'login_settings' %}"
+                    class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'login_settings' %}sidebar-account-active{% endif %}"
+                >
+                    Login Settings
+                </a>
+                <a
+                    href="{% url 'notifications' %}"
+                    class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'notifications' %}sidebar-account-active{% endif %}"
+                >
+                    Notifications
+                </a>
+            </div>
+        </nav>
+
+        <main class="col-md-10 ms-sm-auto px-4">
+                    <h2>Edit Email Notifications</h2>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label>
+                                {{ form.delivery_notification }} Delivery
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                {{ form.shipped_notification }} Shipped
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                {{ form.sponsor_notification }} Sponsor Notification
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                {{ form.point_change_notification }} Point Changes
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                {{ form.rate_change_notification }} Rate Changes
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                {{ form.purchase_notification }} Purchase
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                {{ form.approvals_notification }} Approvals
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn">Save</button>
+                    </form>
+                </main>
+    </div>
+</div>
+{% endblock %}

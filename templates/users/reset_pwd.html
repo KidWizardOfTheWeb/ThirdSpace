@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %} Reset Password {% endblock title %}
+{% block content %}
+    <div>
+        <h1>Forgot Password</h1>
+        <div class="logForm">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.email }}
+                <!--<input type="email" name="email" autocomplete="email" required placeholder="Email"><br>-->
+                <button type="submit">Send email</button>
+            </form>
+        </div>
+        <div class="text-center">
+            <a href="{% url 'login' %}">Login</a><br>
+            <a href="{% url 'register' %}">Register</a><br>
+            <a href="{% url 'reset_pwd_confirm' %}" class="btn btn-primary">Received Code?</a>
+        </div>
+    </div>
+{% endblock content %}

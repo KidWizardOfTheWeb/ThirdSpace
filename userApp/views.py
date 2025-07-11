@@ -266,7 +266,7 @@ def dashboard_redirect(request):
 
         # Redirect based on user type
         if request.user.user_type == 1:  # basic user
-            return redirect('driver_dashboard')
+            return redirect('user_home_page')
         elif request.user.user_type == 2:  # ???
             return redirect('sponsor_dashboard')
         elif request.user.user_type == 3:  # admin
@@ -276,7 +276,7 @@ def dashboard_redirect(request):
 
 @login_required
 @user_passes_test(is_basic)
-def driver_dashboard(request):
+def user_home_page(request):
     context = {}
 
     if request.user.is_authenticated:
@@ -301,7 +301,7 @@ def driver_dashboard(request):
             # debugging
             # context['point_balance'] = "No driver profile found."
             context['form'] = None
-    return render(request, 'users/dashboard.html', context)
+    return render(request, 'users/user_home_page.html', context)
 
 #@user_passes_test(is_sponsor)
 def sponsor_dashboard(request):

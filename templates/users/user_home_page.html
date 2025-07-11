@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} Your Home Page {% endblock title %}
+{% block content %}
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Main Content -->
+            <div class="content">
+                {% if user.is_authenticated %}
+                    <h2>Welcome to your home page, {{ user.username }}!</h2>
+<!--                    {% if request.session.is_simulation %}-->
+<!--                    <h3>Simulation From User {{ request.session.simulator_username }}</h3>-->
+<!--                    {% endif %}-->
+                    <div>
+                        <p>Add text here.</p>
+                    </div>
+<!--                    {% if message %}-->
+<!--                            <p style="color: green;">{{ message }}</p>-->
+<!--                    {% endif %}-->
+                {% else %}
+                    <h2>Welcome to your home page!</h2>
+                {% endif %}
+
+                <p id="placehold">Welcome.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock content %}

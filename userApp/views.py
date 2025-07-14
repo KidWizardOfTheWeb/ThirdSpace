@@ -281,26 +281,30 @@ def user_home_page(request):
 
     if request.user.is_authenticated:
         try:
-            # driver, _ = User.objects.get_or_create(user=request.user)
-            # context['point_balance'] = driver.point_balance
+            # user, _ = Account.objects.get_or_create(user=request.user)
+            # context['website_code'] = user.website_code
 
             if request.method == 'POST':
-                form = ChangePointsForm(request.POST)
+                form = PostForm(request.POST)
                 if form.is_valid():
+                    # html = form.cleaned_data['content']
+                    # user.website_code = html
+                    # user.save()
+                    # context['message'] = "Website updated!"
                     pass
                     # points = form.cleaned_data['points']
                     # driver.point_balance += points
                     # driver.save()
                     # context['message'] = "Points updated successfully!"
             else:
-                form = ChangePointsForm()
+                form = PostForm()
 
             context['form'] = form
 
         except User.DoesNotExist:
             # debugging
-            # context['point_balance'] = "No driver profile found."
-            context['form'] = None
+            context['website_code'] = "No user profile found."
+            # context['form'] = None
     return render(request, 'users/user_home_page.html', context)
 
 #@user_passes_test(is_sponsor)

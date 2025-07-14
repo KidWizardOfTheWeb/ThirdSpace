@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} Confirm Code {% endblock title %}
+{% block content %}
+    <body class="loginWrapper">
+        <h1 class="loginTitle">Confirm Email</h1>
+        <div class="logForm">
+            <form method="POST">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <div class="alert" role="alert">
+                        <div id="form_errors">
+                            {% for key, value in form.errors.items %}
+                                <strong>{{ key }}</strong>
+                                <strong>{{ value }}</strong>                           
+                            {% endfor %}               
+                        </div>
+                    </div>
+                {% endif %}
+                
+                {{ form.username }}<br><br>
+                {{ form.email_code }}<br><br>
+
+                <button type="submit" class="btn" style="margin: 0px 25px 0px 0px;">Submit</button>
+                <a href="{% url 'login' %}" class="btn-neg" >Return</a>
+            </form>
+        </div>
+    </body>
+{% endblock content %}

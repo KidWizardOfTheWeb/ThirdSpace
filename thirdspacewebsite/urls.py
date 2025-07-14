@@ -20,5 +20,6 @@ from django.urls import include, path
 urlpatterns = [
     # path("userApp/", include("userApp.urls")),
     path("admin/", admin.site.urls),
+    path('tinymce/', include('tinymce.urls')),
     path('', include('userApp.urls')) # makes userApp the default page
 ]

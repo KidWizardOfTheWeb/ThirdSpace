@@ -1,9 +1,12 @@
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import RegionalPhoneNumberWidget
-from .models import User, NotificationSettings
+from .models import User, NotificationSettings, UserPageData
 
 from django.contrib.auth.forms import UserCreationForm
+
+# from django.contrib.flatpages.models import FlatPage
+from tinymce.widgets import TinyMCE
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=32, required=True,
@@ -208,3 +211,19 @@ class DriverNotificationSettingsForm(forms.ModelForm):
 #     class Meta:
 #         model = TicketResponse
 #         fields = ['message']
+
+
+class TinyMCEWidget(TinyMCE):
+    def use_required_attribute(self, *args):
+        return False
+
+class PostForm(forms.ModelForm):
+    content = forms.CharField(widget=TinyMCEWidget(attrs={'cols': 80, 'rows':30,'class': 'form-control'}))
+    class Meta:
+        model = UserPageData
+        fields = '__all__'
+
+# class FlatPageForm(forms.ModelForm):
+#     class Meta:
+#         model = FlatPage
+#         widgets = {'content': TinyMCE(attrs={'cols': 80, 'rows': 30})}

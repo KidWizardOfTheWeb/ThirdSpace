@@ -2,9 +2,12 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.template.defaultfilters import default
 from phonenumber_field.modelfields import PhoneNumberField
+from tinymce.widgets import TinyMCE
+from tinymce.models import HTMLField
 
 # Create your models here.
 class User(AbstractUser):
+    objects = models.Manager()
     USER_TYPES = (
         (1, "Basic"),
         (2, "Moderator"),
@@ -19,6 +22,9 @@ class User(AbstractUser):
     dark_mode = models.BooleanField(default=False)
     bio = models.TextField(max_length=500, blank=True)
     picture = models.ImageField(upload_to='profile_pics', default='default.jpg')
+
+    website_code = HTMLField(default="")
+
     # add birthday?
 
     # don't enforce real names probably, make this username instead
@@ -112,3 +118,6 @@ class AuditLog(models.Model):
 
     def __str__(self):
         return f'[{self.category}] {self.timestamp} - {self.log_message}'
+
+class UserPageData(models.Model):
+    content = HTMLField()

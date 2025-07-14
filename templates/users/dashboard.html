@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %} Dashboard {% endblock title %}
+{% block content %}
+
+<!-- Navbar inj -->
+{% include 'navbar.html' %}
+<body>
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Main Content -->
+            <div class="content">
+                {% if user.is_authenticated %}
+                    <h2>Welcome to your dashboard, {{ user.username }}!</h2>
+                    {% if request.session.is_simulation %}
+                    <h3>Simulation From User {{ request.session.simulator_username }}</h3>
+                    {% endif %}
+                    <div>
+                        <p>Your current point balance is: {{ user.driver.point_balance }}</p>
+                        <form class="sponsor-dropdown" action="{% url 'sponsor_select' %}" method="POST">
+                            {% csrf_token %}
+                            <select name="sponsor" class="form-select" style="width: auto;" onchange="this.form.submit()">
+                                <option value="">Select Sponsor</option>
+                                {% for sponsor in user.driver.sponsor.all %}
+                                    <option value="{{ sponsor.id }}" {% if sponsor == user.driver.current_sponsor %} selected {% endif %}> 
+                                        {{ sponsor.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </div>
+                    {% if message %}
+                            <p style="color: green;">{{ message }}</p>
+                    {% endif %}
+                {% else %}
+                    <h2>Welcome to your dashboard!</h2>
+                {% endif %}
+
+                <p id="placehold">Welcome. We hope you've been driving well.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock content %}

@@ -19,6 +19,7 @@
 <!--                    {% endif %}-->
                     <div>
                         <p>Your current user type is: {{ user.user_type }}</p>
+                        <p>Type some HTML here and press the button below.</p>
                         <form method="POST">
                             {% csrf_token %}
                             {% if form.errors %}
@@ -36,9 +37,14 @@
                             <script>
                                 var userCode = {{ user.website_code }}
                             </script>
-                                <iframe id="userCodeOutput" srcdoc="<html>{{ user.website_as_string }}</html>"></iframe>
+                                <iframe
+                                        id="userCodeOutput"
+                                        srcdoc="<html>{{ user.website_as_string }}</html>"
+                                        width="100%"
+                                >
+                                </iframe>
                             {% endif %}
-                            <button type="submit">Login</button>
+                            <button type="submit">View website output and save</button>
                         </form>
                     </div>
 <!--                    {% if message %}-->
@@ -48,7 +54,7 @@
                     <h2>Welcome to your home page!</h2>
                 {% endif %}
 
-                <p id="placehold">Welcome.
+                <p id="placehold">Website output above.
                 </p>
             </div>
         </div>

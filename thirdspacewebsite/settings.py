@@ -30,6 +30,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = 'django-insecure-)j!o=f3++-q!+-2^eexo%xmd@@pi-whz=z2bsnqi1w9z*gzk2v'
 SECRET_KEY = env('SECRET_KEY')
 
 
@@ -38,6 +39,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.mangodjango.xyz', '44.195.152.134']
 
 # # E-mail Server
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

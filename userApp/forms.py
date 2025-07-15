@@ -221,7 +221,7 @@ class PostForm(forms.ModelForm):
     content = forms.CharField(widget=TinyMCEWidget(attrs={'cols': 80, 'rows':30,'class': 'form-control'}))
     class Meta:
         model = UserPageData
-        fields = '__all__'
+        fields = ['content']
 
 # class FlatPageForm(forms.ModelForm):
 #     class Meta:

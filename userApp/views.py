@@ -28,6 +28,7 @@ from .forms import *
 from .models import (AuditLog, NotificationSettings, Account)
 from .helpers import *
 # from notifications.signals import notify
+from bs4 import BeautifulSoup
 # from notifications.models import Notification
 
 def index(request):
@@ -277,20 +278,28 @@ def dashboard_redirect(request):
 @login_required
 @user_passes_test(is_basic)
 def user_home_page(request):
+    # refactor this function to be a URL that links from the actual user home page instead of being the main one
     context = {}
 
     if request.user.is_authenticated:
         try:
-            # user, _ = Account.objects.get_or_create(user=request.user)
-            # context['website_code'] = user.website_code
+            user = request.user
+            context['website_code'] = user.website_code
 
             if request.method == 'POST':
                 form = PostForm(request.POST)
                 if form.is_valid():
-                    # html = form.cleaned_data['content']
-                    # user.website_code = html
-                    # user.save()
-                    # context['message'] = "Website updated!"
+                    # cleaned data messes with displaying properly below
+                    html = form.cleaned_data['content']
+                    user.website_code = html
+                    html_as_string = BeautifulSoup(html)
+                    print("Test")
+                    print(html_as_string.get_text)
+                    user.website_as_string = html_as_string.get_text
+                    # save as string
+                    user.save()
+                    context['message'] = "Website updated!"
+                    # render/redirect to home page w/ added HTML code
                     pass
                     # points = form.cleaned_data['points']
                     # driver.point_balance += points
@@ -304,7 +313,7 @@ def user_home_page(request):
         except User.DoesNotExist:
             # debugging
             context['website_code'] = "No user profile found."
-            # context['form'] = None
+            context['form'] = None
     return render(request, 'users/user_home_page.html', context)
 
 #@user_passes_test(is_sponsor)

@@ -30,10 +30,14 @@
                                     </div>
                                 </div>
                             {% endif %}
-                            {{ form }}
-                            {% for txt in form.content %}
-
-                            {% endfor %}
+                            {{ form.content }}
+                            {% if user.website_code %}
+<!--                                <p id="userCode"></p>-->
+                            <script>
+                                var userCode = {{ user.website_code }}
+                            </script>
+                                <iframe id="userCodeOutput" srcdoc="<html>{{ user.website_as_string }}</html>"></iframe>
+                            {% endif %}
                             <button type="submit">Login</button>
                         </form>
                     </div>

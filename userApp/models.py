@@ -124,6 +124,8 @@ class AuditLog(models.Model):
         return f'[{self.category}] {self.timestamp} - {self.log_message}'
 
 class UserPageData(models.Model):
+    objects = models.Manager()
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, default="")
     content = HTMLField()
     content_as_string = TextField(default="")
 

@@ -20,6 +20,7 @@
                     <div>
                         <p>Your current user type is: {{ user.user_type }}</p>
                         <p>Type some HTML here and press the button below.</p>
+                        <a href="{% url 'logout' %}" class="logoutBtn">Logout</a>
                         <form method="POST">
                             {% csrf_token %}
                             {% if form.errors %}
@@ -32,19 +33,16 @@
                                 </div>
                             {% endif %}
                             {{ form.content }}
+                            <button type="submit">View website output and save</button>
                             {% if user.website_code %}
-<!--                                <p id="userCode"></p>-->
-                            <script>
-                                var userCode = {{ user.website_code }}
-                            </script>
+
                                 <iframe
                                         id="userCodeOutput"
-                                        srcdoc="<html>{{ user.website_as_string }}</html>"
+                                        srcdoc="<html>{{ website_as_string }}</html>"
                                         width="100%"
                                 >
                                 </iframe>
                             {% endif %}
-                            <button type="submit">View website output and save</button>
                         </form>
                     </div>
 <!--                    {% if message %}-->

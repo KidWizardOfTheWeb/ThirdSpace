@@ -284,7 +284,6 @@ def user_home_page(request):
     if request.user.is_authenticated:
         try:
             user = request.user
-            context['website_code'] = user.website_code
 
             if request.method == 'POST':
                 form = PostForm(request.POST)
@@ -292,12 +291,14 @@ def user_home_page(request):
                     # cleaned data messes with displaying properly below
                     html = form.cleaned_data['content']
                     user.website_code = html
-                    html_as_string = BeautifulSoup(html)
-                    print("Test")
+                    html_as_string = BeautifulSoup(html, features="html.parser")
+                    print("Test0")
                     print(html_as_string.get_text)
                     user.website_as_string = html_as_string.get_text
                     # save as string
                     user.save()
+                    context['website_code'] = user.website_code
+                    context['website_as_string'] = user.website_as_string
                     context['message'] = "Website updated!"
                     # render/redirect to home page w/ added HTML code
                     pass
@@ -306,15 +307,27 @@ def user_home_page(request):
                     # driver.save()
                     # context['message'] = "Points updated successfully!"
             else:
-                form = PostForm()
+                print("Test1")
+                init = {
+                    "content": user.website_code
+                }
+                print(user.website_as_string)
+                form = PostForm(init)
+                html_as_string = BeautifulSoup(user.website_code, features="html.parser")
+                context['website_as_string'] = html_as_string.string
 
             context['form'] = form
+            print(context)
 
         except User.DoesNotExist:
             # debugging
             context['website_code'] = "No user profile found."
             context['form'] = None
     return render(request, 'users/user_home_page.html', context)
+
+def logout(request):
+    logout_view(request)
+    return redirect('login')
 
 #@user_passes_test(is_sponsor)
 def sponsor_dashboard(request):

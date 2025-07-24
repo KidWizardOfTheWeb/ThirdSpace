@@ -32,7 +32,16 @@
                                     </div>
                                 </div>
                             {% endif %}
-                            {{ form.content }}
+
+<!--                            This is where TinyMCE shows up-->
+                            <details>
+                                <summary>
+                                    Click here to display HTML text editor.
+                                </summary>
+                                <p>{{ form.content }}</p>
+                            </details>
+<!--                            {{ form.content }}-->
+
                             <button type="submit">View website output and save</button>
                             {% if user.website_code %}
 

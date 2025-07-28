@@ -1,0 +1,134 @@
+/* styles.css */
+
+body {
+    background-color: #333;
+    color: #fff;
+}
+
+.loginWrapper {
+    background-color: #ffb347; /* Mango color */
+}
+
+.homeWrapper {
+    background-color: #ffb347; /* Mango color */
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.homeHeader {
+    color: #000;
+    font-family: "Instrument Sans", sans-serif;
+    background-color: #fff;
+    padding: 18px;
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 36px;
+}
+
+.homeInfoWrapper {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    padding: 30px; /* Added padding */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.homeVersion {
+    font-family: "Instrument Sans", sans-serif;
+    font-size: 30px;
+    color: #000;
+}
+
+.logForm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    margin: 0 auto;
+    color: #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.loginTitle {
+    text-align: center;
+    color: white;
+    font-size: 64px;
+    font-weight: bold;
+    margin-bottom: 42px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.btn {
+    display: inline-block;
+    padding: 20px 20px;
+    font-size: 16px;
+    text-align: center;
+    color: #000;
+    background-color: #4caf50;
+    transition: background-color 0.2s ease;
+}
+
+.btn-neg {
+    display: inline-block;
+    padding: 20px 20px;
+    font-size: 16px;
+    text-align: center;
+    color: #000;
+    background-color: #f44336;
+    transition: background-color 0.2s ease;
+}
+
+.btn-add {
+    display: inline-block;
+    padding: 20px 20px;
+    font-size: 16px;
+    text-align: center;
+    color: #000;
+    background-color: #2196f3;
+    transition: background-color 0.2s ease;
+}
+
+.btn-glow {
+    border-style: none;
+    animation: breathe 1s linear infinite;
+}
+
+@keyframes breathe {
+    0% {
+     box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.9)
+    }
+    50% {
+     box-shadow: 0 0 0 7px rgba(76, 175, 80, 0.7)
+    }
+    100% {
+        box-shadow: 0 0 0 9px rgba(76, 175, 80, 0)
+    }
+}
+
+.btn:hover {
+    background-color: #388e3c;
+}
+
+.btn-neg:hover {
+    background-color: #d32f2f;
+}
+
+.btn-add:hover {
+    background-color: #3f51b5;
+}
+
+.sponsor-dropdown  {
+    margin-left: auto;
+}

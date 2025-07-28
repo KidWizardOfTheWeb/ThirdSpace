@@ -1,0 +1,5 @@
+.webPreview {
+  width: auto; /* over ride constraints and show all */
+  height: auto;
+  scrolling: no;
+}

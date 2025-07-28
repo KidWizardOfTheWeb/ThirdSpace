@@ -2,6 +2,16 @@
 {% block title %} Your Home Page {% endblock title %}
 {% block content %}
 
+<style>
+    #container {
+       height: 100vw;
+    }
+
+    iframe {
+       height: 100vw;
+    }
+</style>
+
 <head>
     {% load static %}
     {{ form.media }}
@@ -44,13 +54,14 @@
 
                             <button type="submit">View website output and save</button>
                             {% if user.website_code %}
-
-                                <iframe
+                                <div>
+                                    <iframe
                                         id="userCodeOutput"
                                         srcdoc="<html>{{ website_as_string }}</html>"
                                         width="100%"
-                                >
-                                </iframe>
+                                    >
+                                    </iframe>
+                                </div>
                             {% endif %}
                         </form>
                     </div>
@@ -60,9 +71,6 @@
                 {% else %}
                     <h2>Welcome to your home page!</h2>
                 {% endif %}
-
-                <p id="placehold">Website output above.
-                </p>
             </div>
         </div>
     </div>

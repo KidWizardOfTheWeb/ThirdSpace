@@ -48,9 +48,21 @@
                                 <summary>
                                     Click here to display HTML text editor.
                                 </summary>
-                                <p>{{ form.content }}</p>
+                                <div id="TinyMCEBox" contenteditable="true">{{ form.content }}</div>
+
+                                <!-- If the editor sees changes are made, asynchronously save the new content-->
+                                <script>
+                                if (tinymce.activeEditor != null && tinymce.activeEditor.isDirty()) {
+                                    console.clear()
+                                    console.log(document.getElementById('id_content_ifr').contentDocument.body.textContent)
+                                    tinymce.activeEditor.save()
+                                    console.log(tinymce.activeEditor.getBody().textContent)
+                                }
+                                </script>
+
                             </details>
 <!--                            {{ form.content }}-->
+
 
                             <button type="submit">View website output and save</button>
                             {% if user.website_code %}

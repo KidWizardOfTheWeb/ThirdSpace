@@ -4,3 +4,4 @@ from .models import *
 # Register your models here.
 admin.site.register(UserPageData)
 admin.site.register(User)
+admin.site.register(Account)

@@ -287,19 +287,30 @@ def user_home_page(request):
 
             if request.method == 'POST':
                 form = PostForm(request.POST)
+                # if form is valid AND tinymce is dirty (i.e. data changed, so compare database version to form before submitting)
+                # if database version == form version, do NOT save to database (saves aws resources and costs)
                 if form.is_valid():
-                    # cleaned data messes with displaying properly below
+                    # cleaned data messes with displaying properly below, so convert to HTML
                     html = form.cleaned_data['content']
-                    user.website_code = html
                     html_as_string = BeautifulSoup(html, features="html.parser")
-                    print("Test0")
-                    print(html_as_string.get_text)
-                    user.website_as_string = html_as_string.get_text
-                    # save as string
-                    user.save()
-                    context['website_code'] = user.website_code
-                    context['website_as_string'] = user.website_as_string
-                    context['message'] = "Website updated!"
+                    print("Test0\n\n")
+                    print(str(user.website_code) + "\n\n")
+                    print(str(html) + "\n\n")
+                    print(user.website_code != html)
+                    # save as string (ONLY IF THIS IS DIFFERENT THEN THE DATABASE HTML)
+                    if user.website_code != html:
+                        print("Changes detected, saving to database.")
+                        user.website_code = html
+                        user.website_as_string = html_as_string.get_text
+                        user.save()
+                        context['message'] = "Website updated!"
+                        context['website_code'] = user.website_code
+                        context['website_as_string'] = user.website_as_string
+                    else:
+                        print("No changes detected.")
+                        context['website_code'] = user.website_code
+                        context['website_as_string'] = html_as_string.get_text # why does this work... but not website_as_string
+
                     # render/redirect to home page w/ added HTML code
                     pass
                     # points = form.cleaned_data['points']
@@ -314,7 +325,8 @@ def user_home_page(request):
                 print(user.website_as_string)
                 form = PostForm(init)
                 html_as_string = BeautifulSoup(user.website_code, features="html.parser")
-                context['website_as_string'] = html_as_string.string
+                context['website_code'] = user.website_code
+                context['website_as_string'] = html_as_string.get_text
 
             context['form'] = form
             print(context)

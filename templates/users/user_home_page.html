@@ -65,7 +65,8 @@
 
 
                             <button type="submit">View website output and save</button>
-                            {% if user.website_code %}
+                        </form>
+                        {% if website_code %}
                                 <div>
                                     <iframe
                                         id="userCodeOutput"
@@ -75,7 +76,6 @@
                                     </iframe>
                                 </div>
                             {% endif %}
-                        </form>
                     </div>
 <!--                    {% if message %}-->
 <!--                            <p style="color: green;">{{ message }}</p>-->

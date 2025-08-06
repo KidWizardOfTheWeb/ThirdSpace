@@ -50,24 +50,34 @@
                                 </summary>
                                 <div id="TinyMCEBox" contenteditable="true">{{ form.content }}</div>
 
-                                <!-- If the editor sees changes are made, asynchronously save the new content-->
                                 <script>
-                                if (tinymce.activeEditor != null && tinymce.activeEditor.isDirty()) {
-                                    console.clear()
-                                    console.log(document.getElementById('id_content_ifr').contentDocument.body.textContent)
-                                    tinymce.activeEditor.save()
-                                    console.log(tinymce.activeEditor.getBody().textContent)
-                                }
+                                    /// Fires when an editor is added to the EditorManager collection.
+                                    /// On input to the text box, the HTML output visually updates
+                                  tinymce.on('addeditor', function( event ) {
+                                    var editor = event.editor;
+                                    var $textarea = $('#' + editor.id);
+                                    console.log($textarea.val());
+
+                                    editor.on('input', (e) => {
+                                      if (tinymce.activeEditor != null) {
+<!--                                      if (tinymce.activeEditor.isDirty()) {-->
+                                        console.clear()
+                                        console.log(document.getElementById('id_content_ifr').contentDocument.body.textContent)
+                                        tinymce.activeEditor.save()
+                                        console.log(tinymce.activeEditor.getBody().textContent)
+                                        document.getElementById('websiteOutput').querySelector('iframe').srcdoc = tinymce.activeEditor.getBody().textContent
+<!--                                        }-->
+                                      }
+                                    });
+                                  }, true );
                                 </script>
-
                             </details>
-<!--                            {{ form.content }}-->
-
 
                             <button type="submit">View website output and save</button>
                         </form>
+
                         {% if website_code %}
-                                <div>
+                                <div id="websiteOutput">
                                     <iframe
                                         id="userCodeOutput"
                                         srcdoc="<html>{{ website_as_string }}</html>"

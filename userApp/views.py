@@ -348,3 +348,28 @@ def sponsor_dashboard(request):
 @user_passes_test(is_admin)
 def admin_dashboard(request):
     return render(request, 'users/admin_dashboard.html')
+
+def search_engine(request):
+    # This is the page for searching for other users' sites. Post requests come through here to search the database for a possible match
+    context = {}
+
+    if request.user.is_authenticated:
+        try:
+            user = request.user
+
+            if request.method == 'POST':
+                form = SearchEngineForm(request.POST)
+                if form.is_valid():
+                    # render/redirect to search results
+                    pass
+
+            else:
+                form = SearchEngineForm()
+
+            context['form'] = form
+            print(context)
+
+        except User.DoesNotExist:
+            # debugging
+            context['form'] = None
+    return render(request, 'websitesearch.html', context)

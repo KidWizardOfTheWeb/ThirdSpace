@@ -223,7 +223,10 @@ class PostForm(forms.ModelForm):
         model = UserPageData
         fields = ['content']
 
-# class FlatPageForm(forms.ModelForm):
-#     class Meta:
-#         model = FlatPage
-#         widgets = {'content': TinyMCE(attrs={'cols': 80, 'rows': 30})}
+class SearchEngineForm(forms.Form):
+    # What the user enters into the search box
+    # note: check if "required" is necessary (depends on final page design honestly)
+    searchBoxQuery = forms.CharField(required=True,
+                               widget=forms.SearchInput(attrs={'placeholder' : 'Find your ThirdSpace',
+                                                               'autocomplete':'off',
+                                                               'inputmode':'search'}), label='')

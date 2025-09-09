@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %} Search for ThirdSpaces {% endblock title %}
+{% block content %}
+
+<style>
+    .searchTitle {
+       text-align: center;
+    }
+
+    .searchQueryForm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 95%;
+    height: 200px;
+    margin: 0 auto;
+    color: #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+
+    [type=search] {
+        -webkit-appearance: textfield;
+        outline-offset: 0px;
+    }
+
+    input[type="search"] {
+        appearance: auto;
+        box-sizing: border-box;
+        padding-block: 1px;
+        padding-inline: 2px;
+    }
+</style>
+
+<head>
+    {% load static %}
+</head>
+<body>
+
+  <div class="searchTitle">
+    <p>ThirdSpace world search.</p>
+  </div>
+
+  <div class="searchQueryForm">
+        <form method="POST">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert" role="alert">
+                    <div id="form_errors">
+                        {% for key, value in form.errors.items %}
+                            <strong>{{ value }}</strong>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            {{ form }}<br>
+            <button type="submit">Submit</button>
+        </form>
+  </div>
+
+</body>
+{% endblock content %}

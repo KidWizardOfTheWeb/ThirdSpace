@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 
+# NOTE: add url dispatcher pattern for users - https://docs.djangoproject.com/en/5.2/topics/http/urls
 urlpatterns = [
     path("", views.index, name="index"),
 
@@ -14,4 +15,5 @@ urlpatterns = [
     path('dashboard/user/', views.user_home_page, name='user_home_page'),
     path('dashboard/sponsor/', views.sponsor_dashboard, name='sponsor_dashboard'),
     path('dashboard/admin/', views.admin_dashboard, name='admin_dashboard'),
+    path('search', views.search_engine, name='search_engine')
 ]
